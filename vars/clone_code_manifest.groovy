@@ -21,11 +21,12 @@ def call(Map config = [thirdparty:false, clean_workSpace:true, optimize:false]) 
 	
 	if (config.optimize == true)
 	{
-	    echo "optimization is enabled"
+		sh "repo init -u https://jenkins@blrgithub.radisys.com/scm/alm/lte/odsc_manifest.git -m ${config.manifestFile} --no-repo-verify --repo-url /opt/git-repo.git"
 	}
 	else
 	{
         sh "repo init -u https://jenkins@blrgithub.radisys.com/scm/alm/lte/odsc_manifest.git -m ${config.manifestFile}"
-	    sh ''' repo sync -j 11 '''
 	}
+	
+	sh ''' repo sync -j 11 '''
 }
