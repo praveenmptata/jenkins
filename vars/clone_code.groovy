@@ -1,8 +1,14 @@
 def call(Map config = [thirdparty:false, clean_workSpace:true, optimize:false]) {
-    sh '''git config --global user.name "Jenkins CI Group"
+
+	if (! config.containsKey('manifestFile'))
+	{
+	    error("ERROR: Manifest file not passes as input")
+	}
+
+	sh '''git config --global user.name "Jenkins CI Group"
           git config --global user.email "Jenkins.CIGroup@radisys.com"
           git config --global credential.helper store '''
-	
+
 	if (config.clean_workSpace == true)
 	{
 	    sh ''' cd ${WORKSPACE}; rm -rf * '''
