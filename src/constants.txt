@@ -1,0 +1,4 @@
+class constants {
+  final String 9x_manifest_file = "5gran_odsc_9.7_release_manifest.xml"
+  final String 10x_manifest_file = "5gran_odsc_master_release_manifest.xml"
+}
