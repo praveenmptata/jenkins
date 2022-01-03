@@ -1,0 +1,4 @@
+useage:
+clone_code_manifest(manifestFile: File name, thirdparty: false, clean_workSpace: true, optimize: false)
+    - manifestFile is mandatory parameter the step will fail if not present.
+	- the other parameters are optional as they have default values.
