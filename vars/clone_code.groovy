@@ -3,7 +3,7 @@ def call(Map config = [:]) {
 	      git config --global user.email "Jenkins.CIGroup@radisys.com" 
           git config --global credential.helper store '''
 	
-	when ( equals (expected: true, actual: config.clean_workSpace))
+	if (config.clean_workSpace == true)
 	{
 	    sh ''' cd ${WORKSPACE}; rm -rf * '''
 	}
