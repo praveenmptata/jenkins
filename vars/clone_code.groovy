@@ -2,7 +2,7 @@ def call(Map config = [thirdparty:false, clean_workSpace:true, optimize:false]) 
 
 	if (! config.containsKey('manifestFile'))
 	{
-	    error("ERROR: Manifest file not passes as input")
+	    error("Manifest file not passes as input")
 	}
 
 	sh '''git config --global user.name "Jenkins CI Group"
