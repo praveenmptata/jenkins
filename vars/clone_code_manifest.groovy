@@ -1,4 +1,4 @@
-def call(Map Inputs = [:].withDefault([thirdparty:true, clean_workSpace:true, optimize:false].&get)) {
+def call(Map Inputs = [:] + [thirdparty:true, clean_workSpace:true, optimize:false]) {
     
     println "Inputs : ${Inputs.toMapString()}"
 
