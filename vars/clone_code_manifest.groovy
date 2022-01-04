@@ -1,5 +1,8 @@
 def call(Map Inputs = [:] ) {
-    println "Inputs : ${Inputs.toMapString()}"
+
+	Map default_inputs = [thirdparty:false, clean_workSpace:true, optimize:false]
+	Inputs = default_inputs + Inputs
+	println "Inputs : ${Inputs.toMapString()}"
 
     if (! Inputs.containsKey('manifestFile'))
     {
