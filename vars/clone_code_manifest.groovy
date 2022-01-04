@@ -1,5 +1,4 @@
-def call(Map Inputs = [:] + [thirdparty:true, clean_workSpace:true, optimize:false]) {
-    
+def call(Map Inputs = [:] ) {
     println "Inputs : ${Inputs.toMapString()}"
 
     if (! Inputs.containsKey('manifestFile'))
@@ -13,17 +12,17 @@ def call(Map Inputs = [:] + [thirdparty:true, clean_workSpace:true, optimize:fal
           git config --global user.email "Jenkins.CIGroup@radisys.com"
           git config --global credential.helper store '''
 
-	if (Inputs.clean_workSpace == true)
+	if (Inputs.get('clean_workSpace', true)
 	{
 	    sh ''' cd ${WORKSPACE}; rm -rf * '''
 	}
 	
-	if (Inputs.thirdparty == true)
+	if (Inputs.get('thirdparty' , true)
 	{
         checkout([$class: 'GitSCM', branches: [[name: '*/Arm_roadmap_jenkins_scripts']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: '5g_jobs_thirdparty']], gitTool: 'Default', submoduleCfg: [], userRemoteConfigs: [[credentialsId: '841769bd-6936-4c5e-aa77-5214885738e0', url: 'https://jenkins@blrgithub.radisys.com/scm/alm/lte/5g_jobs_thirdparty.git']]])
 	}
 	
-	if (Inputs.optimize == true)
+	if (Inputs.get('optimize', false)
 	{
         sh "repo init -u https://jenkins@blrgithub.radisys.com/scm/alm/lte/odsc_manifest.git -m ${Inputs.manifestFile} --no-repo-verify --repo-url /opt/git-repo.git"
 	}
