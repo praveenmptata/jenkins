@@ -20,12 +20,12 @@ def call(Map Inputs = [:] ) {
 	    sh ''' cd ${WORKSPACE}; rm -rf * '''
 	}
 	
-	if (Inputs.thirdparty == true))
+	if (Inputs.thirdparty == true)
 	{
         checkout([$class: 'GitSCM', branches: [[name: '*/Arm_roadmap_jenkins_scripts']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: '5g_jobs_thirdparty']], gitTool: 'Default', submoduleCfg: [], userRemoteConfigs: [[credentialsId: '841769bd-6936-4c5e-aa77-5214885738e0', url: 'https://jenkins@blrgithub.radisys.com/scm/alm/lte/5g_jobs_thirdparty.git']]])
 	}
 	
-	if (Inputs.optimize == true))
+	if (Inputs.optimize == true)
 	{
         sh "repo init -u https://jenkins@blrgithub.radisys.com/scm/alm/lte/odsc_manifest.git -m ${Inputs.manifestFile} --no-repo-verify --repo-url /opt/git-repo.git"
 	}
