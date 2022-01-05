@@ -1,0 +1,3 @@
+useage:
+compileOdscYoctoCUOID(workspacePath)
+    - workspacePath represents the location where code is present.

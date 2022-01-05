@@ -24,6 +24,5 @@ def call(String workpacePath ) {
 	else
 	{
 		echo "gnb_cu is not generted"
-		exit 1
 	}
 }
