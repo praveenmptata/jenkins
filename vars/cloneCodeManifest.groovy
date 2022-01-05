@@ -41,12 +41,16 @@ def call(Map Inputs = [:] ) {
         error("repo init failed")
     }
 
-    println "params : ${params.toMapString()}"
-    if (params.containsKey('Source_PR_Branch')) {
-        sh "sed -i \'s|${params.Dest_PR_Branch}|${params.Source_PR_Branch}|g\' ${manifestFilePath}"
+    Map param = [:]
+	param['Source_PR_Branch'] = 'bugfix/du_ut_fix_9x'
+	param['Dest_PR_Branch'] = '5gran_radisys_odsc_dev_9x_f1_dpdk'
+	
+    println "params : ${param.toMapString()}"
+    if (param.containsKey('Source_PR_Branch')) {
+        sh "sed -i \'s|${param.Dest_PR_Branch}|${param.Source_PR_Branch}|g\' ${manifestFilePath}"
         def output = Utils().runCmdAndGetOutput("cat ${manifestFilePath}")
-	    if(! output.contains(params.Source_PR_Branch)) {
-            error("${params.Source_PR_Branch} replacement failed in ${manifestFilePath}")
+	    if(! output.contains(param.Source_PR_Branch)) {
+            error("${param.Source_PR_Branch} replacement failed in ${manifestFilePath}")
         }
     }
 
