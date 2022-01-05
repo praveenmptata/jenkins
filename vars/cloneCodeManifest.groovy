@@ -43,10 +43,13 @@ def call(Map Inputs = [:] ) {
 
     println "params : ${params.toMapString()}"
     if (params.containsKey('Source_PR_Branch')) {
-        
         sh "sed -i \'s|${params.Dest_PR_Branch}|${params.Source_PR_Branch}|g\' ${manifestFilePath}"
+        def output = Utils().runCmdAndGetOutput("cat ${manifestFilePath}")
+	    if(! output.contains(params.Source_PR_Branch)) {
+            error("${params.Source_PR_Branch} replacement failed in ${manifestFilePath}")
+        }
     }
 
     sh ''' repo sync -j 11 '''
-	sh 'repo info'
+    sh ''' repo info '''
 }

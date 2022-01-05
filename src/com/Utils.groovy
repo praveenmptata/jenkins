@@ -1,11 +1,11 @@
 
 package com
 
-import groovy.util.*
-import groovy.xml.*
 
-String changeSrcBranch() {
-    printf('place holder for utility functions')
+String runCmdAndGetOutput(String cmd) {
+    printf("cmd recevied : %s", cmd)
+    def proc = cmd.execute()
+    return proc.text
 }
 
 return this
