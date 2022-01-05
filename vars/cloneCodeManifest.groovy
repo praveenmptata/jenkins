@@ -35,17 +35,18 @@ def call(Map Inputs = [:] ) {
         sh "repo init -u https://jenkins@blrgithub.radisys.com/scm/alm/lte/odsc_manifest.git -m ${Inputs.manifestFile}"
     }
 
-    Map para = [:]
-    para['Source_PR_Branch'] = 'bugfix/choice_hdl_9x'
-    para['Dest_PR_Branch'] = 'cu_odsc_9x'
-    println "params : ${para.toMapString()}"
+    def manifestFilePath = "${WORKSPACE}/.repo/manifests/${Inputs.manifestFile}"
+    if (! fileExists(manifestFilePath))
+    {
+        error("repo init failed")
+    }
 
-    if (para.containsKey('Source_PR_Branch')) {
-        def manifestFilePath = "${WORKSPACE}/.repo/manifests/${Inputs.manifestFile}"
-        sh "sed -i \'s|${para.Dest_PR_Branch}|${para.Source_PR_Branch}|g\' ${manifestFilePath}"
-		sh "cat ${manifestFilePath}"
-        sh 'repo branches'
+    println "params : ${params.toMapString()}"
+    if (params.containsKey('Source_PR_Branch')) {
+        
+        sh "sed -i \'s|${params.Dest_PR_Branch}|${params.Source_PR_Branch}|g\' ${manifestFilePath}"
     }
 
     sh ''' repo sync -j 11 '''
+	sh 'repo info'
 }
