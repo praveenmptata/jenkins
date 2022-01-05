@@ -48,7 +48,7 @@ def call(Map Inputs = [:] ) {
     println "params : ${param.toMapString()}"
     if (param.containsKey('Source_PR_Branch')) {
         sh "sed -i \'s|${param.Dest_PR_Branch}|${param.Source_PR_Branch}|g\' ${manifestFilePath}"
-        def output = Utils.runCmdAndGetOutput("cat ${manifestFilePath}")
+        def output = new Utils().runCmdAndGetOutput("cat ${manifestFilePath}")
 		println output
 	    if(! output.contains("${param.Source_PR_Branch}")) {
             error("${param.Source_PR_Branch} replacement failed in ${manifestFilePath}")

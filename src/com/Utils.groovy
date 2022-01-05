@@ -7,5 +7,3 @@ String runCmdAndGetOutput(String cmd) {
     def proc = cmd.execute()
     return proc.text
 }
-
-return this
