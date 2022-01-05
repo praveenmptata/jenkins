@@ -1,3 +1,6 @@
+
+import com.Utils
+
 def call(Map Inputs = [:] ) {
 
     Map default_inputs = [thirdparty:true, clean_workSpace:true, optimize:false]
@@ -6,11 +9,9 @@ def call(Map Inputs = [:] ) {
 
     if (! Inputs.containsKey('manifestFile'))
     {
-        this.hello('FAILED')
         error("Manifest file not passes as input to clone_code step")
     }
 
-	this.hello('INPROGRESS')
 	sh '''git config --global user.name "Jenkins CI Group"
           git config --global user.email "Jenkins.CIGroup@radisys.com"
           git config --global credential.helper store '''
@@ -33,38 +34,19 @@ def call(Map Inputs = [:] ) {
     {
         sh "repo init -u https://jenkins@blrgithub.radisys.com/scm/alm/lte/odsc_manifest.git -m ${Inputs.manifestFile}"
     }
-	
+
+    def manifestFilePath = "${WORKSPACE}/.repo/manifests/${Inputs.manifestFile}"
+    if (! fileExists(manifestFilePath))
+    {
+        error("repo init failed")
+    }
+
+    println "params : ${params.toMapString()}"
+    if (params.containsKey('Source_PR_Branch')) {
+        
+        sh "sed -i \'s|${params.Dest_PR_Branch}|${params.Source_PR_Branch}|g\' ${manifestFilePath}"
+    }
+
     sh ''' repo sync -j 11 '''
-
-    if (Inputs.containsKey('srcBranch') {
-        def checkoutPath = new Utils().getCodePath(${WORKSPACE}/ , "${destBrach}")
-        sh " cd ${checkoutPath}
-             git branch
-             git checkout ${Inputs.srcBranch}
-             git branch
-             git log -n 1"
-    }
-}
-
-def notifyStash(String state) {
-
-    checkout([$class: 'GitSCM', branches: [[name: '$Source_PR_Branch']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CheckoutOption', timeout: 120], [$class: 'CloneOption', noTags: true, reference: '', shallow: false, timeout: 120], [$class: 'WipeWorkspace'], [$class: 'RelativeTargetDirectory', relativeTargetDir: '5gran_radisys_odsc_dev']], gitTool: 'Default', submoduleCfg: [], userRemoteConfigs: [[credentialsId: '841769bd-6936-4c5e-aa77-5214885738e0', url: 'https://jenkins@blrgithub.radisys.com/scm/alm/lte/products_cu.git']]])
-	
-    if('SUCCESS' == state || 'FAILED' == state) {
-        currentBuild.result = state         // Set result of currentBuild !Important!
-    }
-    step([$class: 'StashNotifier',
-          credentialsId: '841769bd-6936-4c5e-aa77-5214885738e0',
-          disableInprogressNotification: false,
-          ignoreUnverifiedSSLPeer: true,
-          includeBuildNumberInKey: false,
-          prependParentProjectKey: true,
-          projectKey: '',
-          stashServerBaseUrl: 'https://alm.radisys.com/bitbucket'
-	])
-}
-
-
-def hello(String msg) {
-    echo "${msg}"
+	sh 'repo info'
 }
