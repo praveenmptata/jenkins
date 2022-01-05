@@ -1,11 +1,6 @@
 
 package com
 
-import groovy.util.*
-import groovy.xml.*
-
-String changeSrcBranch() {
-    printf('place holder for utility functions')
+String sample(String cmd) {
+        println "place holder"
 }
-
-return this

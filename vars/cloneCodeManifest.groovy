@@ -18,7 +18,7 @@ def call(Map Inputs = [:] ) {
 
     if (Inputs.clean_workSpace)
     {
-        sh ''' cd ${WORKSPACE}; rm -rf * '''
+        sh ''' cd ${WORKSPACE}; rm -rf * ; rm -rf .repo'''
     }
 	
     if (Inputs.thirdparty)
@@ -43,10 +43,9 @@ def call(Map Inputs = [:] ) {
 
     println "params : ${params.toMapString()}"
     if (params.containsKey('Source_PR_Branch')) {
-        
-        sh "sed -i \'s|${params.Dest_PR_Branch}|${params.Source_PR_Branch}|g\' ${manifestFilePath}"
+        sh "sed -i \'/${params.repo}/ s|${params.Dest_PR_Branch}|${params.Source_PR_Branch}|g\' ${manifestFilePath}"
     }
 
     sh ''' repo sync -j 11 '''
-	sh 'repo info'
+    sh ''' repo info '''
 }
