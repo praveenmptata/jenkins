@@ -1,6 +1,6 @@
 #!/usr/bin/groovy
 
-package Utils
+package com
 
 import groovy.util.*
 import groovy.xml.*
