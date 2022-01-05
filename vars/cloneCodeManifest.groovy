@@ -36,14 +36,15 @@ def call(Map Inputs = [:] ) {
         sh "repo init -u https://jenkins@blrgithub.radisys.com/scm/alm/lte/odsc_manifest.git -m ${Inputs.manifestFile}"
     }
 
+    Map para = [:]
+    para['Source_PR_Branch'] = 'bugfix/choice_hdl_9x'
+    para['Dest_PR_Branch'] = 'cu_odsc_9x'
     println "params : ${params.toMapString()}"
-    params['Source_PR_Branch'] = 'bugfix/choice_hdl_9x'
-    params['Dest_PR_Branch'] = 'cu_odsc_9x'
 
     if (params.containsKey('Source_PR_Branch')) {
         def manifestFilePath = ${WORKSPACE} + '/.repo/manifests/' +  "${Inputs.manifestFile}"
         println manifestFilePath
-        def checkoutPath = new Utils().changeSrcBranch(manifestFilePath, ${params.Dest_PR_Branch}, ${params.Source_PR_Branch})
+        def checkoutPath = new Utils().changeSrcBranch(manifestFilePath, ${para.Dest_PR_Branch}, ${para.Source_PR_Branch})
         sh " cd ${WORKSPACE}/${checkoutPath}"
         sh " git branch; git log -n 1"
     }
