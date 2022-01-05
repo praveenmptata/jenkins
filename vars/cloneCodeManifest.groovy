@@ -12,9 +12,9 @@ def call(Map Inputs = [:] ) {
         error("Manifest file not passes as input to clone_code step")
     }
 
-	sh '''git config --global user.name "Jenkins CI Group"
-          git config --global user.email "Jenkins.CIGroup@radisys.com"
-          git config --global credential.helper store '''
+    sh '''git config --global user.name "Jenkins CI Group"
+        git config --global user.email "Jenkins.CIGroup@radisys.com"
+        git config --global credential.helper store '''
 
     if (Inputs.clean_workSpace)
     {
