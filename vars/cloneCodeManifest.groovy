@@ -1,4 +1,3 @@
-#!/usr/bin/groovy
 
 import com.Utils
 
@@ -43,7 +42,7 @@ def call(Map Inputs = [:] ) {
 
     if (para.containsKey('Source_PR_Branch')) {
         def manifestFilePath = "${WORKSPACE}/${Inputs.manifestFile}"
-        sh "sed -i \'s/${para.Dest_PR_Branch}/${para.Source_PR_Branch}/g\'"
+        sh "sed -i \'s|${para.Dest_PR_Branch}|${para.Source_PR_Branch}|g\' ${manifestFilePath}"
 		sh "cat ${manifestFilePath}"
         //def checkoutPath = new Utils().changeSrcBranch(manifestFilePath, "${para.Dest_PR_Branch}", "${para.Source_PR_Branch}")
         sh " cd ${WORKSPACE}/${checkoutPath}"
