@@ -46,4 +46,5 @@ def call(Map Inputs = [:] ) {
     }
 
     sh ''' repo sync -j 11 '''
+    println ${WORKSPACE} + '/.repo/manifests/' +  "${Inputs.manifestFile}"
 }
