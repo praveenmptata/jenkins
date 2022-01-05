@@ -33,37 +33,15 @@ def call(Map Inputs = [:] ) {
     {
         sh "repo init -u https://jenkins@blrgithub.radisys.com/scm/alm/lte/odsc_manifest.git -m ${Inputs.manifestFile}"
     }
-	
-    sh ''' repo sync -j 11 '''
 
     println "params : ${params.toMapString()}"
 
     if (params.containsKey('Source_PR_Branch')) {
-        def checkoutPath = new Utils.Utils().getCodePath(${WORKSPACE} + '/.repo/manifests/' +  "${Inputs.manifestFile}", ${params.Source_PR_Branch})
+	    def manifestFilePath = ${WORKSPACE} + '/.repo/manifests/' +  "${Inputs.manifestFile}"
+        def checkoutPath = new Utils.Utils().changeSrcBranch(manifestFilePath, ${params.Dest_PR_Branch}, ${params.Source_PR_Branch})
         sh " cd ${WORKSPACE}/${checkoutPath}"
-		sh " git branch; git checkout ${params.Source_PR_Branch}; git branch; git log -n 1"
+        sh " git branch; git log -n 1"
     }
-}
 
-def notifyStash(String state) {
-
-    checkout([$class: 'GitSCM', branches: [[name: '$Source_PR_Branch']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CheckoutOption', timeout: 120], [$class: 'CloneOption', noTags: true, reference: '', shallow: false, timeout: 120], [$class: 'WipeWorkspace'], [$class: 'RelativeTargetDirectory', relativeTargetDir: '5gran_radisys_odsc_dev']], gitTool: 'Default', submoduleCfg: [], userRemoteConfigs: [[credentialsId: '841769bd-6936-4c5e-aa77-5214885738e0', url: 'https://jenkins@blrgithub.radisys.com/scm/alm/lte/products_cu.git']]])
-	
-    if('SUCCESS' == state || 'FAILED' == state) {
-        currentBuild.result = state         // Set result of currentBuild !Important!
-    }
-    step([$class: 'StashNotifier',
-          credentialsId: '841769bd-6936-4c5e-aa77-5214885738e0',
-          disableInprogressNotification: false,
-          ignoreUnverifiedSSLPeer: true,
-          includeBuildNumberInKey: false,
-          prependParentProjectKey: true,
-          projectKey: '',
-          stashServerBaseUrl: 'https://alm.radisys.com/bitbucket'
-	])
-}
-
-
-def hello(String msg) {
-    echo "${msg}"
+    sh ''' repo sync -j 11 '''
 }
