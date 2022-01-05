@@ -17,7 +17,7 @@ def call(Map Inputs = [:] ) {
 
     if (Inputs.clean_workSpace)
     {
-	    sh ''' cd ${WORKSPACE}; rm -rf * '''
+        sh ''' cd ${WORKSPACE}; rm -rf * '''
     }
 	
     if (Inputs.thirdparty)
@@ -34,7 +34,7 @@ def call(Map Inputs = [:] ) {
         sh "repo init -u https://jenkins@blrgithub.radisys.com/scm/alm/lte/odsc_manifest.git -m ${Inputs.manifestFile}"
     }
 	
-	sh ''' repo sync -j 11 '''
+    sh ''' repo sync -j 11 '''
 
     if (Inputs.containsKey('srcBranch') {
         def checkoutPath = new Utils().getCodePath(${WORKSPACE}/ , "${destBrach}")
