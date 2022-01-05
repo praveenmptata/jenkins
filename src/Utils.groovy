@@ -3,10 +3,10 @@ package Utils
 import groovy.util.*
 
 
-String getCodePath(String filename, String intBranch) {
+String getCodePath(String filename, String integrationBranch) {
     def rootNode = new XmlSlurper().parse(filename)
-	def myNode = rootNode.depthFirst().findAll { it.name() == 'project' && it.revision == intBranch}
-	return myNode.path.text()
+	def myNode = rootNode.depthFirst().find { it.name() == 'project' && it.@revision == integrationBranch}
+	return myNode.@path
 }
 
 return this
