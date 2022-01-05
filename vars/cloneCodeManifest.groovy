@@ -41,14 +41,9 @@ def call(Map Inputs = [:] ) {
         error("repo init failed")
     }
 
-    Map param = [:]
-	param['Source_PR_Branch'] = 'bugfix/du_ut_fix_9x'
-	param['Dest_PR_Branch'] = '5gran_radisys_odsc_dev_9x_f1_dpdk'
-	param['repo'] = '5gran_jio_odsc'
-	
-    println "params : ${param.toMapString()}"
-    if (param.containsKey('Source_PR_Branch')) {
-        sh "sed -i \'/${param.repo}/ s|${param.Dest_PR_Branch}|${param.Source_PR_Branch}|g\' ${manifestFilePath}"
+    println "params : ${params.toMapString()}"
+    if (params.containsKey('Source_PR_Branch')) {
+        sh "sed -i \'/${params.repo}/ s|${params.Dest_PR_Branch}|${params.Source_PR_Branch}|g\' ${manifestFilePath}"
     }
 
     sh ''' repo sync -j 11 '''
