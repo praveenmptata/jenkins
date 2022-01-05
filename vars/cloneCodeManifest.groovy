@@ -10,11 +10,9 @@ def call(Map Inputs = [:] ) {
 
     if (! Inputs.containsKey('manifestFile'))
     {
-        this.hello('FAILED')
         error("Manifest file not passes as input to clone_code step")
     }
 
-	this.hello('INPROGRESS')
 	sh '''git config --global user.name "Jenkins CI Group"
           git config --global user.email "Jenkins.CIGroup@radisys.com"
           git config --global credential.helper store '''
