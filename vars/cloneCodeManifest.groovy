@@ -40,10 +40,10 @@ def call(Map Inputs = [:] ) {
 
     if (params.containsKey('Source_PR_Branch') {
         def checkoutPath = new Utils().getCodePath(${WORKSPACE} + '/.repo/manifests/' +  "${Inputs.manifestFile}", params.Dest_PR_Branch)
-        sh " cd ${WORKSPACE}/${checkoutPath}
-             git branch
-             git checkout ${params.Source_PR_Branch}
-             git branch
+        sh " cd ${WORKSPACE}/${checkoutPath};
+             git branch;
+             git checkout ${params.Source_PR_Branch};
+             git branch;
              git log -n 1"
     }
 }
