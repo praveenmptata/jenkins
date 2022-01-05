@@ -10,9 +10,7 @@ String changeSrcBranch(String filename, String integrationBranch, String srcBran
     printf('tgtBranch : %s', integrationBranch)
     printf('srcBranch : %s', srcBranch)
 
-    def readxml = new File(filename)
-    println readxml.text
-    def rootNode = new XmlSlurper().parse(readxml)
+    def rootNode = new XmlSlurper().parse(filename)
     println 'xml read is done'
     def myNode = rootNode.depthFirst().find { it.name() == 'project' && it.@revision == integrationBranch}
     println 'node is found'
