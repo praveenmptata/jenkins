@@ -10,13 +10,13 @@ String changeSrcBranch(String filename, String integrationBranch, String srcBran
     printf('tgtBranch : %s', integrationBranch)
     printf('srcBranch : %s', srcBranch)
 
-    def xml = new File(filename)
-	println 'File is able to open'
-    def rootNode = new XmlSlurper().parse(File(filename))
+    def readxml = new File(filename)
+    println 'File is able to open'
+    def rootNode = new XmlSlurper().parse(readxml)
     def myNode = rootNode.depthFirst().find { it.name() == 'project' && it.@revision == integrationBranch}
     myNode.@revision = srcBranch
     println 'read is done'
-    xml.withWriter {out-> XmlUtil.serialize(rootNode, out) }
+    new File(filename).withWriter {out-> XmlUtil.serialize(rootNode, out) }
     return myNode.@path
 }
 
