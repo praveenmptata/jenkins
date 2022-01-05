@@ -37,14 +37,16 @@ def call(Map Inputs = [:] ) {
     }
 
     println "params : ${params.toMapString()}"
+    params['Source_PR_Branch'] = 'bugfix/choice_hdl_9x'
+    params['Dest_PR_Branch'] = 'cu_odsc_9x'
 
     if (params.containsKey('Source_PR_Branch')) {
-	    def manifestFilePath = ${WORKSPACE} + '/.repo/manifests/' +  "${Inputs.manifestFile}"
+        def manifestFilePath = ${WORKSPACE} + '/.repo/manifests/' +  "${Inputs.manifestFile}"
+        println manifestFilePath
         def checkoutPath = new Utils().changeSrcBranch(manifestFilePath, ${params.Dest_PR_Branch}, ${params.Source_PR_Branch})
         sh " cd ${WORKSPACE}/${checkoutPath}"
         sh " git branch; git log -n 1"
     }
 
     sh ''' repo sync -j 11 '''
-    println ${WORKSPACE} + '/.repo/manifests/' +  "${Inputs.manifestFile}"
 }
