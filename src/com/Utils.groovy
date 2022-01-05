@@ -12,7 +12,7 @@ String changeSrcBranch(String filename, String integrationBranch, String srcBran
 
     def xml = new File(filename)
 	println 'File is able to open'
-    def rootNode = new XmlSlurper().parse(filename)
+    def rootNode = new XmlSlurper().parse(File(filename))
     def myNode = rootNode.depthFirst().find { it.name() == 'project' && it.@revision == integrationBranch}
     myNode.@revision = srcBranch
     println 'read is done'
