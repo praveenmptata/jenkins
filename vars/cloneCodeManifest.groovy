@@ -38,7 +38,7 @@ def call(Map Inputs = [:] ) {
 
     if (params.containsKey('Source_PR_Branch')) {
 	    def manifestFilePath = ${WORKSPACE} + '/.repo/manifests/' +  "${Inputs.manifestFile}"
-        def checkoutPath = new Utils.Utils().changeSrcBranch(manifestFilePath, ${params.Dest_PR_Branch}, ${params.Source_PR_Branch})
+        def checkoutPath = new Utils.Utils.changeSrcBranch(manifestFilePath, ${params.Dest_PR_Branch}, ${params.Source_PR_Branch})
         sh " cd ${WORKSPACE}/${checkoutPath}"
         sh " git branch; git log -n 1"
     }
