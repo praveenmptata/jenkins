@@ -13,7 +13,7 @@ String changeSrcBranch(String filename, String integrationBranch, String srcBran
     def rootNode = new XmlSlurper().parse(filename)
     def myNode = rootNode.depthFirst().find { it.name() == 'project' && it.@revision == integrationBranch}
     myNode.@revision = srcBranch
-    def xml = new File(filename)
+    def xml = new File(filename + '_1')
     xml.withWriter {out-> XmlUtil.serialize(rootNode, out) }
     return myNode.@path
 }
