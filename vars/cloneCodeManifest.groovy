@@ -41,12 +41,10 @@ def call(Map Inputs = [:] ) {
     println "params : ${para.toMapString()}"
 
     if (para.containsKey('Source_PR_Branch')) {
-        def manifestFilePath = "${WORKSPACE}/${Inputs.manifestFile}"
+        def manifestFilePath = "${WORKSPACE}/.repo/manifests/${Inputs.manifestFile}"
         sh "sed -i \'s|${para.Dest_PR_Branch}|${para.Source_PR_Branch}|g\' ${manifestFilePath}"
 		sh "cat ${manifestFilePath}"
-        //def checkoutPath = new Utils().changeSrcBranch(manifestFilePath, "${para.Dest_PR_Branch}", "${para.Source_PR_Branch}")
-        sh " cd ${WORKSPACE}/${checkoutPath}"
-        sh " git branch; git log -n 1"
+        sh 'repo branches'
     }
 
     sh ''' repo sync -j 11 '''
