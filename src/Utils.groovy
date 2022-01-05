@@ -1,3 +1,5 @@
+#!/usr/bin/groovy
+
 package Utils
 
 import groovy.util.*
