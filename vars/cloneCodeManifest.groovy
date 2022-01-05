@@ -18,7 +18,7 @@ def call(Map Inputs = [:] ) {
 
     if (Inputs.clean_workSpace)
     {
-        sh ''' cd ${WORKSPACE}; rm -rf * '''
+        sh ''' cd ${WORKSPACE}; rm -rf * ; rm -rf .repo'''
     }
 	
     if (Inputs.thirdparty)
