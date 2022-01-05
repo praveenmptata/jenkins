@@ -36,11 +36,13 @@ def call(Map Inputs = [:] ) {
 	
     sh ''' repo sync -j 11 '''
 
-    if (Inputs.containsKey('srcBranch') {
-        def checkoutPath = new Utils().getCodePath(${WORKSPACE}/ , "${destBrach}")
-        sh " cd ${checkoutPath}
+    println "params : ${params.toMapString()}"
+
+    if (params.containsKey('Source_PR_Branch') {
+        def checkoutPath = new Utils().getCodePath(${WORKSPACE} + '/.repo/manifests/' +  "${Inputs.manifestFile}", params.Dest_PR_Branch)
+        sh " cd ${WORKSPACE}/${checkoutPath}
              git branch
-             git checkout ${Inputs.srcBranch}
+             git checkout ${params.Source_PR_Branch}
              git branch
              git log -n 1"
     }
