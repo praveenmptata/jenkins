@@ -1,6 +1,6 @@
 def call(Map Inputs = [:] ) {
 
-    Map default_inputs = [thirdparty:true, clean_workSpace:true, optimize:false, srcBranch:false]
+    Map default_inputs = [thirdparty:true, clean_workSpace:true, optimize:false]
     Inputs = default_inputs + Inputs
     println "Inputs : ${Inputs.toMapString()}"
 
@@ -15,31 +15,34 @@ def call(Map Inputs = [:] ) {
           git config --global user.email "Jenkins.CIGroup@radisys.com"
           git config --global credential.helper store '''
 
-	if (Inputs.clean_workSpace)
-	{
+    if (Inputs.clean_workSpace)
+    {
 	    sh ''' cd ${WORKSPACE}; rm -rf * '''
-	}
+    }
 	
-	if (Inputs.thirdparty)
-	{
+    if (Inputs.thirdparty)
+    {
         checkout([$class: 'GitSCM', branches: [[name: '*/Arm_roadmap_jenkins_scripts']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: '5g_jobs_thirdparty']], gitTool: 'Default', submoduleCfg: [], userRemoteConfigs: [[credentialsId: '841769bd-6936-4c5e-aa77-5214885738e0', url: 'https://jenkins@blrgithub.radisys.com/scm/alm/lte/5g_jobs_thirdparty.git']]])
-	}
+    }
 	
-	if (Inputs.optimize)
-	{
+    if (Inputs.optimize)
+    {
         sh "repo init -u https://jenkins@blrgithub.radisys.com/scm/alm/lte/odsc_manifest.git -m ${Inputs.manifestFile} --no-repo-verify --repo-url /opt/git-repo.git"
-	}
-	else
-	{
+    }
+    else
+    {
         sh "repo init -u https://jenkins@blrgithub.radisys.com/scm/alm/lte/odsc_manifest.git -m ${Inputs.manifestFile}"
-	}
+    }
 	
 	sh ''' repo sync -j 11 '''
 
-    if (Inputs.srcBranch) {
+    if (Inputs.containsKey('srcBranch') {
         def checkoutPath = new Utils().getCodePath(${WORKSPACE}/ , "${destBrach}")
-        sh "cd ${checkoutPath}"
-        sh " git branch; git checkout ${Inputs.SrcBranch}; git branch; git log -n 1"
+        sh " cd ${checkoutPath}
+             git branch
+             git checkout ${Inputs.srcBranch}
+             git branch
+             git log -n 1"
     }
 }
 
