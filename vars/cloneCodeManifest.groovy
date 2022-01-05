@@ -44,7 +44,7 @@ def call(Map Inputs = [:] ) {
     Map param = [:]
 	param['Source_PR_Branch'] = 'bugfix/du_ut_fix_9x'
 	param['Dest_PR_Branch'] = '5gran_radisys_odsc_dev_9x_f1_dpdk'
-	param['repo'] = 'platform_services'
+	param['repo'] = '5gran_jio_odsc'
 	
     println "params : ${param.toMapString()}"
     if (param.containsKey('Source_PR_Branch')) {
