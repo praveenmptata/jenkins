@@ -25,10 +25,10 @@ def call(String filter, Map Inputs = [:] ) {
 
     writeFile file: "cmd.txt", text: ["r", "bt", "generate-core-file", "q"].join("\n")
     sh """
-	sed  -i 's|OAM_JSON_CFG_FILE_NAME =.*|OAM_JSON_CFG_FILE_NAME = ..\/config\/oam_3gpp_cell_cfg_mu3_6cell.json|g' ${Inputs.workspace}/5gran_jio_odsc/5gran/du/build/du_ut/du_bin/config/oam_du_json_cfg.txt
+    sed  -i 's|OAM_JSON_CFG_FILE_NAME =.*|OAM_JSON_CFG_FILE_NAME = ..\/config\/oam_3gpp_cell_cfg_mu3_6cell.json|g' ${Inputs.workspace}/5gran_jio_odsc/5gran/du/build/du_ut/du_bin/config/oam_du_json_cfg.txt
     export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:."""
 
-	if (Inputs.valgrind) {
+    if (Inputs.valgrind) {
         sh """
         timeout --preserve-status 45m valgrind --tool=memcheck -v --leak-check=full --show-reachable=yes --time-stamp=yes --log-file=${val_report} ./gnb_du --gtest_filter=${filter} --gtest_output=${ut_report}
         """
