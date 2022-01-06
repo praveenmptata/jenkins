@@ -1,0 +1,6 @@
+useage:
+runOdsc_DU_UT_VALGRIND_JSON(filter, workspace: ${WORKSPACE}, validate_ut: true, valgrind: false)
+    - filter is mandatory parameter used to filter the gtest test cases to run.
+    - the other parameters are optional as they have default values.
+	  - validate_ut if false will skip validation and the vertict of TC pass/fail will not be done.
+	  - valgrind if set to true will run du ut with valgrind command.
