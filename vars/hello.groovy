@@ -27,5 +27,5 @@ def call(Map config = [:]) {
         else
             echo 'All is well'
         fi """
-	this.pipelinieInit()
+	pipelinieInit()
 }
