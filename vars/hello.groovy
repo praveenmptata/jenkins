@@ -27,5 +27,7 @@ def call(String config = 'hello') {
         else
             echo 'All is well'
         fi """
-	pipelinieInit()
+	dir('cool') {
+	    pipelinieInit()
+	}
 }
