@@ -9,7 +9,6 @@ def call(String workpacePath ) {
     {
         sh """
         cd ${workpacePath}/5gran_jio_odsc/ngp/thirdparty/dpdk
-        rm -rf dpdk
         cp -rf ${workpacePath}/5g_jobs_thirdparty/dpdk-20.11.tar.gz .
         tar -zxvf dpdk-20.11.tar.gz
         cd ${workpacePath}/5gran_jio_odsc/ngp/build/

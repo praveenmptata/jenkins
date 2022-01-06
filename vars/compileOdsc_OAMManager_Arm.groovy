@@ -1,6 +1,16 @@
 
 def call(String workpacePath ) {
 
+    if (! fileExists("${workpacePath}/5gran_jio_odsc/ngp/build/libngp.a"))
+    {
+        sh """
+        cd ${workpacePath}/5gran_jio_odsc/ngp/thirdparty/dpdk
+        cp -rf ${workpacePath}/5g_jobs_thirdparty/dpdk.tar.gz .
+        tar -zxvf dpdk.tar.gz
+        cd ${workpacePath}/5gran_jio_odsc/ngp/build/
+        make TARGET=arm -j 20"""
+    }
+
     sh """
     cd ${workpacePath}
     ./build_arm_odsc.sh"""
