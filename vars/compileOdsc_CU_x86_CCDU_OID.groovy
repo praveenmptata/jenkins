@@ -16,7 +16,7 @@ def call(String workpacePath ) {
         echo "NGP compilation failed"
         sh 'exit 1'
     }
-	println 'NGP compilation is done'
+    println 'NGP compilation is done'
 
     sh """
     cd ${workpacePath}/5gran_jio_odsc/5gran/cu/build/
