@@ -1,17 +1,30 @@
-def call( ) {
+def call(Map Config = [:] ) {
+
+    default_inp = ['onSuccess': true, 'onFailure': true, 'onAbort': true]
+    Config = default_inp + Config
+    println "Inputs : ${Config.toMapString()}"
+    println "Build Status : currentBuild.currentResult"
+
     success {
-        echo 'cleaning up workspace'
-        deleteDir()
+        if (Config.onSuccess) {
+            echo 'cleaning up workspace'
+            deleteDir()
+        }
     }
 
     aborted {
-        echo 'Cleaning up workspace!'
-        deleteDir()
+        if (Config.onAbort) {
+            echo 'Cleaning up workspace!'
+            deleteDir()
+        }
     }
 
     failure {
-        echo 'Cleaning up workspace!'
-        deleteDir()
+        if (Config.onFailure) {
+            echo 'Cleaning up workspace!'
+            deleteDir()
+        }
     }
+
     println "Pipeline termination is completed"
 }
