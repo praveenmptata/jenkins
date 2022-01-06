@@ -1,4 +1,17 @@
-def call(Map Inputs = [:] ) {
-    //Place holder for any teardown steps needed in the future.
+def call( ) {
+    success {
+        echo 'cleaning up workspace'
+        deleteDir()
+    }
+
+    aborted {
+        echo 'Cleaning up workspace!'
+        deleteDir()
+    }
+
+    failure {
+        echo 'Cleaning up workspace!'
+        deleteDir()
+    }
     println "Pipeline termination is completed"
 }
