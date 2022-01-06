@@ -8,19 +8,18 @@ def call(Map config = [:]) {
             echo 'du ut failed text found'
     }
 
-	script {
+	sh """
         if [ -f core* ]; then
-            echo "Core file detected"
+            echo 'Core file detected'
             ls -l core*
-            sshpass -p "zxcv@1234" ssh -o StrictHostKeyChecking=no root@172.26.0.132 "mkdir -p /root/10x/${BUILD_NUMBER}/"
-            sshpass -p "zxcv@1234" scp -r -o StrictHostKeyChecking=no core* root@172.26.0.132:/root/10x/${BUILD_NUMBER}/
-            sshpass -p "zxcv@1234" scp -r -o StrictHostKeyChecking=no gnb_du root@172.26.0.132:/root/10x/${BUILD_NUMBER}/
+            sshpass -p 'zxcv@1234' ssh -o StrictHostKeyChecking=no root@172.26.0.132 'mkdir -p /root/10x/${BUILD_NUMBER}/'
+            sshpass -p 'zxcv@1234' scp -r -o StrictHostKeyChecking=no core* root@172.26.0.132:/root/10x/${BUILD_NUMBER}/
+            sshpass -p 'zxcv@1234' scp -r -o StrictHostKeyChecking=no gnb_du root@172.26.0.132:/root/10x/${BUILD_NUMBER}/
             rm -rf core*
-            echo "core file copied to : 172.26.0.132"
-            echo "Path : /root/10x/${BUILD_NUMBER}/"
-            echo "Login details : root/zxcv@1234"
+            echo 'core file copied to : 172.26.0.132'
+            echo 'Path : /root/10x/${BUILD_NUMBER}/'
+            echo 'Login details : root/zxcv@1234'
         else
-            echo "All is well"
-        fi
-    }
+            echo 'All is well'
+        fi """
 }
