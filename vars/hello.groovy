@@ -1,5 +1,5 @@
-def call(Map config = [:]) {
-    sh "echo Hello"
+def call(String config = 'hello') {
+    sh "echo ${config}"
 	def status_du_ut = sh(script : "cat du_ut.log | grep 'DU UT FAILED' | wc -l", returnStdout: true).trim()
     def aval_reports = sh (script : "ls *REPORT.xml", returnStdout: true).trim()
     aval_reports = aval_reports.split().join(' ')
@@ -27,4 +27,7 @@ def call(Map config = [:]) {
         else
             echo 'All is well'
         fi """
+	dir('cool') {
+	    pipelinieInit()
+	}
 }

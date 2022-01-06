@@ -1,4 +1,5 @@
 def call(String filter, Map Inputs = [:] ) {
+
     default_inputs = [workspace: ${WORKSPACE}, validate_ut: true, valgrind: false]
     Inputs = default_inputs + Inputs
 

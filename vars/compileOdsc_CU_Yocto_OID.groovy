@@ -1,36 +1,42 @@
-def call(String workpacePath ) {
+def call(String workpacePath = ${WORKSPACE}) {
 
-	sh """
-	cd ${workpacePath}
-	source env_setup
+    println "running code inside : ${workpacePath}"
+    dir("$workpacePath") {
 
-	source /root/sdk/environment-setup-aarch64-poky-linux
-	cd ${workpacePath}/5gran_jio_odsc/ngp/thirdparty/
-	rm -rf dpdk
-	cp -rf ${workpacePath}/5g_jobs_thirdparty/dpdk_YOCTO_JIO_ODSC.tar.gz .
-	tar -zxvf dpdk_YOCTO_JIO_ODSC.tar.gz
+        copyCodetoWs()
 
-	cd ${workpacePath}/5gran_jio_odsc/ngp/build
-	make TARGET=arm -j 20"""
+        sh """
+        cd ${workpacePath}
+        source env_setup
 
-    if (! fileExists("${workpacePath}/5gran_jio_odsc/ngp/build/libngp.a"))
-    {
-        echo "NGP compilation failed"
-        sh 'exit 1'
-    }
-    println 'NGP compilation is done'
+        source /root/sdk/environment-setup-aarch64-poky-linux
+        cd ${workpacePath}/5gran_jio_odsc/ngp/thirdparty/
+        rm -rf dpdk
+        cp -rf ${workpacePath}/5g_jobs_thirdparty/dpdk_YOCTO_JIO_ODSC.tar.gz .
+        tar -zxvf dpdk_YOCTO_JIO_ODSC.tar.gz
 
-    sh '''
-    cd ${workpacePath}/5gran_jio_odsc/5gran/cu/build/
-    ./build_cu_arm.sh '''
+        cd ${workpacePath}/5gran_jio_odsc/ngp/build
+        make TARGET=arm -j 20"""
 
-    if (fileExists("${workpacePath}/5gran_jio_odsc/5gran/cu/build/cu_bin/bin/gnb_cu")) 
-    {
-        echo "***** gnb_cu binary is generated*****"
-    }
-    else
-    {
-        echo "gnb_cu is not generted"
-        sh 'exit 1'
+        if (! fileExists("${workpacePath}/5gran_jio_odsc/ngp/build/libngp.a"))
+        {
+            echo "NGP compilation failed"
+            sh 'exit 1'
+        }
+        println 'NGP compilation is done'
+
+        sh '''
+        cd ${workpacePath}/5gran_jio_odsc/5gran/cu/build/
+        ./build_cu_arm.sh '''
+
+        if (fileExists("${workpacePath}/5gran_jio_odsc/5gran/cu/build/cu_bin/bin/gnb_cu")) 
+        {
+            echo "***** gnb_cu binary is generated*****"
+        }
+        else
+        {
+            echo "gnb_cu is not generted"
+            sh 'exit 1'
+        }
     }
 }
