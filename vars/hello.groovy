@@ -10,6 +10,9 @@ def call(Map config = [:]) {
             echo 'du ut failed text found'
     }
 
+    writeFile file: "cmd.txt", text: ["r", "bt", "generate-core-file", "q"].join("\n")
+    sh 'cat cmd.txt'
+
 	sh """
         if [ -f core* ]; then
             echo 'Core file detected'
