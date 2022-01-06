@@ -1,7 +1,7 @@
 def call(Map config = [:]) {
     sh "echo Hello"
 	def status_du_ut = sh(script : "cat du_ut.log | grep 'DU UT FAILED' | wc -l", returnStdout: true).trim()
-	def aval_reports = sh (script : "find . -name *REPORT.xml", returnStdout: true).trim()
+	def aval_reports = sh (script : "ls *REPORT.xml", returnStdout: true).trim()
     printf("du_ut :%s , aval : %s\n", status_du_ut, aval_reports)
 
     if (status_du_ut.toInteger() > 0 ) {
