@@ -43,6 +43,8 @@ def call(String filter, Map Inputs = [:] ) {
         sh """cp ${Inputs.workspace}/repo/products_tools/tools/Jenkin/gtest_report_parser.py ."""
 
         def aval_reports = sh (script : "find . -name *REPORT.xml", returnStdout: true).trim()
+        aval_reports = aval_reports.split().join(' ')
+
         sh """python gtest_report_parser.py ${aval_reports} | tee du_ut.log"""
 
         def status_du_ut = sh(script : "cat du_ut.log | grep 'DU UT FAILED' | wc -l", returnStdout: true).trim()
