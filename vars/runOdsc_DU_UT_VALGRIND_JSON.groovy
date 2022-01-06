@@ -1,5 +1,5 @@
 def call(String filter, Map Inputs = [:] ) {
-    default_inputs = [workspace: ${WORKSPACE}, validate: true, valgrind: false]
+    default_inputs = [workspace: ${WORKSPACE}, validate_ut: true, valgrind: false]
     Inputs = default_inputs + Inputs
 
     println "UT filter : ${filter} \n Inputs : ${Inputs.toMapString()}"
@@ -39,7 +39,7 @@ def call(String filter, Map Inputs = [:] ) {
         cat ${Inputs.workspace}/5gran_jio_odsc/5gran/du/build/du_ut/du_bin/bin/DU_UT_log.txt.txt"""
     }
 
-    if (Inputs.validate) {
+    if (Inputs.validate_ut) {
         sh """cp ${Inputs.workspace}/repo/products_tools/tools/Jenkin/gtest_report_parser.py ."""
 
         def aval_reports = sh (script : "find . -name *REPORT.xml", returnStdout: true).trim()
@@ -68,7 +68,7 @@ def call(String filter, Map Inputs = [:] ) {
 
 
 checkAndCopyCore(){
-	sh """
+    sh """
         if [ -f core* ]; then
             echo 'Core file detected'
             ls -l core*
