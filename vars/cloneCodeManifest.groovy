@@ -7,8 +7,7 @@ def call(Map Inputs = [:] ) {
     Inputs = default_inputs + Inputs
     println "Inputs : ${Inputs.toMapString()}"
 
-    if (! Inputs.containsKey('manifestFile'))
-    {
+    if (! Inputs.containsKey('manifestFile')) {
         error("Manifest file not passes as input to clone_code step")
     }
 
@@ -16,30 +15,27 @@ def call(Map Inputs = [:] ) {
         git config --global user.email "Jenkins.CIGroup@radisys.com"
         git config --global credential.helper store '''
 
-    if (Inputs.clean_workSpace)
-    {
+    if (Inputs.clean_workSpace) {
         sh ''' cd ${WORKSPACE}; rm -rf * ; rm -rf .repo'''
     }
 	
-    if (Inputs.thirdparty)
-    {
+    if (Inputs.thirdparty) {
         checkout([$class: 'GitSCM', branches: [[name: '*/Arm_roadmap_jenkins_scripts']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: '5g_jobs_thirdparty']], gitTool: 'Default', submoduleCfg: [], userRemoteConfigs: [[credentialsId: '841769bd-6936-4c5e-aa77-5214885738e0', url: 'https://jenkins@blrgithub.radisys.com/scm/alm/lte/5g_jobs_thirdparty.git']]])
     }
 	
-    if (Inputs.optimize)
-    {
+    if (Inputs.optimize) {
         sh "repo init -u https://jenkins@blrgithub.radisys.com/scm/alm/lte/odsc_manifest.git -m ${Inputs.manifestFile} --no-repo-verify --repo-url /opt/git-repo.git"
     }
-    else
-    {
+    else {
         sh "repo init -u https://jenkins@blrgithub.radisys.com/scm/alm/lte/odsc_manifest.git -m ${Inputs.manifestFile}"
     }
 
     def manifestFilePath = "${WORKSPACE}/.repo/manifests/${Inputs.manifestFile}"
-    if (! fileExists(manifestFilePath))
-    {
+    if (! fileExists(manifestFilePath)) {
         error("repo init failed")
     }
+
+    params['build'] = Inputs.manifestFile
 
     println "params : ${params.toMapString()}"
     if (params.containsKey('Source_PR_Branch')) {
