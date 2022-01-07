@@ -13,7 +13,7 @@ def call(String workpacePath = ${WORKSPACE}) {
         cp -rf ${WORKSPACE}/5g_jobs_thirdparty/dpdk_YOCTO_JIO_ODSC.tar.gz .
         tar -zxvf dpdk.tar.gz
         cd 5gran_jio_odsc/ngp/build
-        make TARGET=arm -j 20"""
+        make TARGET=arm CRYPTO=YES -j 20"""
 
         if (! fileExists("5gran_jio_odsc/ngp/build/libngp.a"))
         {
