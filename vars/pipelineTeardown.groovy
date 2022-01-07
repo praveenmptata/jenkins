@@ -1,6 +1,6 @@
 def call(Map Config = [:] ) {
 
-    clenup = ['SUCCESS': true, 'FAILURE': true, 'ABORTED': true]
+    clenup = [SUCCESS: true, FAILURE: true, ABORTED: true]
     Config = clenup + Config
     println "Inputs : ${Config.toMapString()}"
     println "Build Status : ${currentBuild.currentResult}"

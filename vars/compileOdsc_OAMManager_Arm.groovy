@@ -5,13 +5,13 @@ def call(String workpacePath = ${WORKSPACE}) {
 
         copyCodetoWs()
 
-        if (! fileExists("${workpacePath}/5gran_jio_odsc/ngp/build/libngp.a"))
+        if (! fileExists("5gran_jio_odsc/ngp/build/libngp.a"))
         {
             sh """
-            cd ${workpacePath}/5gran_jio_odsc/ngp/thirdparty/dpdk
-            cp -rf ${workpacePath}/5g_jobs_thirdparty/dpdk.tar.gz .
+            cd 5gran_jio_odsc/ngp/thirdparty/dpdk
+            cp -rf ${WORKSPACE}/5g_jobs_thirdparty/dpdk.tar.gz .
             tar -zxvf dpdk.tar.gz
-            cd ${workpacePath}/5gran_jio_odsc/ngp/build/
+            cd 5gran_jio_odsc/ngp/build/
             make TARGET=arm -j 20"""
         }
 
@@ -19,7 +19,7 @@ def call(String workpacePath = ${WORKSPACE}) {
         cd ${workpacePath}
         ./build_arm_odsc.sh"""
 
-        if (fileExists("${workpacePath}/5gran_jio_odsc/5gran/oam/oid_oam_manager/build/oid_bin/bin/oid_oam_manager")) 
+        if (fileExists("5gran_jio_odsc/5gran/oam/oid_oam_manager/build/oid_bin/bin/oid_oam_manager"))
         {
             echo "***** OID binary is generated*****"
         }
