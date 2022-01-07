@@ -6,22 +6,21 @@ def call(String workpacePath = ${WORKSPACE}) {
         copyCodetoWs()
 
         sh """
-        cd ${workpacePath}
         source env_setup"""
 
-        if (! fileExists("${workpacePath}/5gran_jio_odsc/ngp/build/libngp.a"))
+        if (! fileExists("5gran_jio_odsc/ngp/build/libngp.a"))
         {
             sh """
-            cd ${workpacePath}/5gran_jio_odsc/ngp/build
+            cd 5gran_jio_odsc/ngp/build
             make -j 5"""
         }
         println 'NGP compilation is done'
 
         sh """
-        cd ${workpacePath}/5gran_jio_odsc/5gran/cu/build/
+        cd 5gran_jio_odsc/5gran/cu/build/
         ./build_x86_odsc.sh.sh """
 
-        if (fileExists("${workpacePath}/5gran_jio_odsc/5gran/oam/oid_oam_manager/build/oid_bin/bin/oid_oam_manager")) 
+        if (fileExists("5gran_jio_odsc/5gran/oam/oid_oam_manager/build/oid_bin/bin/oid_oam_manager"))
         {
             echo "***** OID binary is generated*****"
         }
