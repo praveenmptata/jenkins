@@ -9,8 +9,7 @@ def call(String workpacePath = ${WORKSPACE}) {
         source env_setup
         cd 5gran_jio_odsc/ngp/build/
         sed -i 's/-DFAST_CRYPTO_ENABLED/-UFAST_CRYPTO_ENABLED/g' flags.mk
-        cat flags.mk
-        make -j 5"""
+        make CRYPTO=NO -j 5"""
 
         if (! fileExists("5gran_jio_odsc/ngp/build/libngp.a"))
         {
@@ -25,8 +24,7 @@ def call(String workpacePath = ${WORKSPACE}) {
         sed -i 's/-DE1_PRIME_SPLIT_ENABLED=0/-DE1_PRIME_SPLIT_ENABLED=1/g' flags.mk;
         sed -i 's/-DFAST_PKT_UPPER/-UFAST_PKT_UPPER/g' flags.mk
         sed -i 's/-DFAST_PKT_LOWER/-UFAST_PKT_LOWER/g' flags.mk
-        cat flags.mk
-        make LIBOAM=OID PRODUCT=ODSC -j 5 """
+        make LIBOAM=OID PRODUCT=ODSC CRYPTO=NO -j 5 """
 
         if (fileExists("5gran_jio_odsc/5gran/cu/build/cu_bin/bin/gnb_cu"))
         {

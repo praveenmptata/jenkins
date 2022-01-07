@@ -9,7 +9,7 @@ def call(String workpacePath = ${WORKSPACE}) {
         source env_setup
         cd 5gran_jio_odsc/ngp/build
         sed -i 's/-DFAST_CRYPTO_ENABLED/-UFAST_CRYPTO_ENABLED/g' flags.mk
-        make TARGET=arm -j 20"""
+        make TARGET=arm CRYPTO=NO -j 20"""
 
         if (! fileExists("5gran_jio_odsc/ngp/build/libngp.a"))
         {

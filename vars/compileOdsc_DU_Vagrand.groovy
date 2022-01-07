@@ -10,7 +10,7 @@ def call(String workpacePath = ${WORKSPACE}) {
         cd 5gran_jio_odsc/ngp/build
         sed -i 's/-DFAST_CRYPTO_ENABLED/-UFAST_CRYPTO_ENABLED/g' flags.mk
         sed -i 's/-UUSE_NATIVE_MEM/-DUSE_NATIVE_MEM/g' flags.mk
-        make clean; make -j 5"""
+        make clean; make CRYPTO=NO -j 5"""
 
         if (! fileExists("5gran_jio_odsc/ngp/build/libngp.a"))
         {

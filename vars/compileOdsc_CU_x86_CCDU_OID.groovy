@@ -24,7 +24,7 @@ def call(String workpacePath = ${WORKSPACE}) {
         sh """
         cd 5gran_jio_odsc/5gran/cu/build/
         sed -i 's/UEXPLICIT_MEM_ALLOCATOR_FOR_STL/DEXPLICIT_MEM_ALLOCATOR_FOR_STL/g' flags.mk
-        make clean; make LIBOAM=OID PRODUCT=MACRO DPDK_VER=20.11 CRYPTO=YES -j 5"""
+        make clean PRODUCT=MACRO; make LIBOAM=OID PRODUCT=MACRO DPDK_VER=20.11 CRYPTO=YES SW_CRYPTO=NO -j 5"""
 
         if (fileExists("5gran_jio_odsc/5gran/cu/build/cu_bin/bin/gnb_cu"))
         {
