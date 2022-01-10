@@ -1,13 +1,20 @@
-def call() {
+def call(int build) {
     pipeline {
-        agent { label "132_agent" }
+        agent any
 	    
         stages {
-            stage('checkout') {
-                steps {
-                    echo "${WORKSPACE}"
-                    cloneCodeManifest(manifestFile:constants.manifest_file_9x)
+		    if (build %2 != 0) {
+                stage('checkout') {
+                    steps {
+                        echo "${WORKSPACE}"
+                        cloneCodeManifest(manifestFile:constants.manifest_file_9x)
+                    }
                 }
+			}
+			else {
+                stage('sample') {
+				    echo 'sample stage'
+				}
             }
         }
         
