@@ -44,4 +44,5 @@ def call(Map Inputs = [:] ) {
 
     sh ''' repo sync -j 11 '''
     sh ''' repo info '''
+	println "Environment Variables : ${env.toMapString()}"
 }
