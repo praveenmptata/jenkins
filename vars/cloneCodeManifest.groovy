@@ -41,8 +41,8 @@ def call(Map Inputs = [:] ) {
     if (params.containsKey('Source_PR_Branch')) {
         sh "sed -i \'/${params.repo}/ s|${params.Dest_PR_Branch}|${params.Source_PR_Branch}|g\' ${manifestFilePath}"
     }
-
+    println "Environment Variables : ${env.build}"
     sh ''' repo sync -j 11 '''
     sh ''' repo info '''
-	println "Environment Variables : ${env.toMapString()}"
+	
 }
