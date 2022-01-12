@@ -2,8 +2,8 @@ def call(String config = 'hello') {
     sh "echo ${config}"
 	dir('cool') {
 	    copyCodetoWs()
-		sh 'pwd
+		sh '''pwd
 		ls -lrt
-		source env_setup'
+		source env_setup'''
 	}
 }
