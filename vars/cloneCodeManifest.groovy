@@ -11,9 +11,9 @@ def call(Map Inputs = [:] ) {
         error("Manifest file not passes as input to clone_code step")
     }
 
-    sh '''git config --global user.name "Jenkins CI Group"
+    sh ( script : '''git config --global user.name "Jenkins CI Group"
         git config --global user.email "Jenkins.CIGroup@radisys.com"
-        git config --global credential.helper store '''
+        git config --global credential.helper store ''', label : 'set the clone credentials')
 
     if (Inputs.clean_workSpace) {
         sh ''' cd ${WORKSPACE}; rm -rf * ; rm -rf .repo'''
@@ -35,13 +35,14 @@ def call(Map Inputs = [:] ) {
         error("repo init failed")
     }
 
-    params['build'] = Inputs.manifestFile
+    env.build = Inputs.manifestFile
 
     println "params : ${params.toMapString()}"
     if (params.containsKey('Source_PR_Branch')) {
         sh "sed -i \'/${params.repo}/ s|${params.Dest_PR_Branch}|${params.Source_PR_Branch}|g\' ${manifestFilePath}"
     }
-
+    println "Environment Variables : ${env.build}"
     sh ''' repo sync -j 11 '''
     sh ''' repo info '''
+	
 }
