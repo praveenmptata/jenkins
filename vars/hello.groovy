@@ -28,6 +28,6 @@ def call(String config = 'hello') {
             echo 'All is well'
         fi """
 	dir('cool') {
-	    pipelinieInit()
+	    copyCodetoWs()
 	}
 }
