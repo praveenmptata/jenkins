@@ -35,7 +35,7 @@ def call(Map Inputs = [:] ) {
         error("repo init failed")
     }
 
-    //params['build'] = Inputs.manifestFile
+    env.build = Inputs.manifestFile
 
     println "params : ${params.toMapString()}"
     if (params.containsKey('Source_PR_Branch')) {
