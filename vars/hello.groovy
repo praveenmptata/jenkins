@@ -2,7 +2,7 @@ def call(String config = 'hello') {
     sh "echo ${config}"
 	dir('cool') {
 	    copyCodetoWs()
-		sh '''#!/usr/bin/bash
+		sh '''#!/bin/bash
 		source env_setup'''
 	}
 }
