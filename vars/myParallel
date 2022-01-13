@@ -1,11 +1,11 @@
 def call (Map pSteps = [:]) {
     m = [:]
+    defaultCfg = [status: true, statusFile: 'l2_odsc.txt']
+    pSteps = defaultCfg + pSteps
 
-    if (! pSteps.containsKey('statusFile')) {
-        pSteps.statusFile = 'l2_odsc.txt'
+    if(pSteps.status) {
+        touch "${WORKSPACE}/${pSteps.statusFile}"
     }
-
-    touch "${WORKSPACE}/${pSteps.statusFile}"
 
     for( script in pSteps ) {
         def theScript = script
@@ -14,10 +14,10 @@ def call (Map pSteps = [:]) {
             stage( theScript ) {
                 try {
                      pSteps[theScript]
-                     sh "echo ${theScript} SUCCESS >> ${WORKSPACE}/${pSteps.statusFile}"
+                     pSteps.status ?: sh "echo ${theScript} SUCCESS >> ${WORKSPACE}/${pSteps.statusFile}"
                 }
                 catch (Exception e) {
-                     sh "echo ${theScript} SUCCESS >> ${WORKSPACE}/${pSteps.statusFile}"
+                     pSteps.status ?: sh "echo ${theScript} SUCCESS >> ${WORKSPACE}/${pSteps.statusFile}"
                      throw(e)
                 }
             }
