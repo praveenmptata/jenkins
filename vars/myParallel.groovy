@@ -23,7 +23,7 @@ def call (Map pSteps = [:]) {
             }
         }
     }
-
+    println "Inputs : ${m.toMapString()}"
     parallel m
     sh "cat ${WORKSPACE}/${pSteps.statusFile}"
 }
