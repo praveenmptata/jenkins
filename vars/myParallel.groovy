@@ -2,7 +2,7 @@ def call (Map pSteps = [:]) {
     m = [:]
     defaultCfg = [status: true, statusFile: 'l2_odsc.txt']
 	pSteps = defaultCfg + pSteps
-    sh " rm ${WORKSPACE}/l2_odsc.txt; touch ${WORKSPACE}/l2_odsc.txt"
+    sh " rm ${WORKSPACE}/${pSteps.statusFile}; touch ${WORKSPACE}/${pSteps.statusFile}"
 
     for( name in pSteps.keySet() ) {
 	
