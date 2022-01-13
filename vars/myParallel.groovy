@@ -8,8 +8,10 @@ def call (Map pSteps = [:]) {
     }
 
     for( script in pSteps ) {
-        def theScript = script
-
+        if ( script in defaultCfg ) {
+		    continue
+		}
+		def theScript = script
         m[ theScript ] = {
             stage( theScript ) {
                 try {
