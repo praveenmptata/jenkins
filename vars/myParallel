@@ -1,0 +1,29 @@
+def call (Map pSteps = [:]) {
+    m = [:]
+
+    if (! pSteps.containsKey('statusFile')) {
+        pSteps.statusFile = 'l2_odsc.txt'
+    }
+
+    touch "${WORKSPACE}/${pSteps.statusFile}"
+
+    for( script in pSteps ) {
+        def theScript = script
+
+        m[ theScript ] = {
+            stage( theScript ) {
+                try {
+                     pSteps[theScript]
+                     sh "echo ${theScript} SUCCESS >> ${WORKSPACE}/${pSteps.statusFile}"
+                }
+                catch (Exception e) {
+                     sh "echo ${theScript} SUCCESS >> ${WORKSPACE}/${pSteps.statusFile}"
+                     throw(e)
+                }
+            }
+        }
+    }
+
+    parallel m
+    sh "cat ${WORKSPACE}/${pSteps.statusFile}"
+}
