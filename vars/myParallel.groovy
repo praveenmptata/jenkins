@@ -15,7 +15,7 @@ def call (Map pSteps = [:]) {
         m[ theScript ] = {
             stage( theScript ) {
                 try {
-                     pSteps[theScript]
+                     pSteps[theScript]()
                      sh "echo ${theScript} SUCCESS >> ${WORKSPACE}/${pSteps.statusFile}"
                 }
                 catch (Exception e) {
