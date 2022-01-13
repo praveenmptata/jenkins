@@ -7,7 +7,7 @@ def call (Map pSteps = [:]) {
 	    def myName = name
 		Closure body = pSteps[name]
         m[ myName ] = {
-		    stage("$myName") {
+		    script {
                 try {
                      body()
                      sh "echo ${myName} SUCCESS >> ${WORKSPACE}/l2_odsc.txt"
