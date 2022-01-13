@@ -1,6 +1,6 @@
 def call (Map pSteps = [:]) {
     m = [:]
-    defaultCfg = [statusFile: 'l2_odsc.txt']
+    defaultCfg = [status: true, statusFile: 'l2_odsc.txt']
 	pSteps = defaultCfg + pSteps
     sh " rm ${WORKSPACE}/l2_odsc.txt; touch ${WORKSPACE}/l2_odsc.txt"
 
@@ -15,11 +15,15 @@ def call (Map pSteps = [:]) {
         m[ myName ] = {
 		    script {
                 try {
-                     body()
-                     sh "echo ${myName} SUCCESS >> ${WORKSPACE}/l2_odsc.txt"
+                    body()
+					if(pSteps.status) {
+                        sh "echo ${myName} SUCCESS >> ${WORKSPACE}/${pSteps.statusFile}"
+					}
                 }
                 catch (Exception e) {
-                     sh "echo ${myName} SUCCESS >> ${WORKSPACE}/l2_odsc.txt"
+				    if(pSteps.status) {
+                        sh "echo ${myName} SUCCESS >> ${WORKSPACE}/${pSteps.statusFile}"
+					}
                      throw(e)
                 }
 			}
@@ -27,5 +31,5 @@ def call (Map pSteps = [:]) {
     }
     println "Inputs : ${m.toMapString()}"
     parallel m
-    sh "cat ${WORKSPACE}/l2_odsc.txt"
+    sh "cat ${WORKSPACE}/${pSteps.statusFile}"
 }
