@@ -5,7 +5,6 @@ def call (Map pSteps = [:]) {
     sh " rm ${WORKSPACE}/${pSteps.statusFile}; touch ${WORKSPACE}/${pSteps.statusFile}"
 
     for( name in pSteps.keySet() ) {
-
         if (name in defaultCfg.keySet()) {
             continue
         }
@@ -13,7 +12,7 @@ def call (Map pSteps = [:]) {
         def myName = name
         Closure body = pSteps[name]
         m[ myName ] = {
-		    script {
+            script {
                 try {
                     body()
                     if(pSteps.status) {
