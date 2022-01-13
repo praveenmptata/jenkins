@@ -8,10 +8,10 @@ def call (Map pSteps = [:]) {
         m[ name ] = stage("$name") {
             try {
                  //body()
-                 sh "echo ${theScript} SUCCESS >> ${WORKSPACE}/l2_odsc.txt"
+                 sh "echo ${name} SUCCESS >> ${WORKSPACE}/l2_odsc.txt"
             }
             catch (Exception e) {
-                 sh "echo ${theScript} SUCCESS >> ${WORKSPACE}/l2_odsc.txt"
+                 sh "echo ${name} SUCCESS >> ${WORKSPACE}/l2_odsc.txt"
                  throw(e)
             }
         }
