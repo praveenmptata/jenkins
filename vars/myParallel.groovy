@@ -6,16 +6,14 @@ def call (Map pSteps = [:]) {
     for( script in pSteps ) {
 		def theScript = script
 		Closure body = pSteps[theScript]
-        m[ theScript ] = {
-            stage( theScript ) {
-                try {
-                     body()
-                     sh "echo ${theScript} SUCCESS >> ${WORKSPACE}/l2_odsc.txt"
-                }
-                catch (Exception e) {
-                     sh "echo ${theScript} SUCCESS >> ${WORKSPACE}/l2_odsc.txt"
-                     throw(e)
-                }
+        m[ theScript ] = script {
+            try {
+                 //body()
+                 sh "echo ${theScript} SUCCESS >> ${WORKSPACE}/l2_odsc.txt"
+            }
+            catch (Exception e) {
+                 sh "echo ${theScript} SUCCESS >> ${WORKSPACE}/l2_odsc.txt"
+                 throw(e)
             }
         }
     }
