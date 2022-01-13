@@ -4,15 +4,16 @@ def call (Map pSteps = [:]) {
     sh " rm ${WORKSPACE}/l2_odsc.txt; touch ${WORKSPACE}/l2_odsc.txt"
 
     for( name in pSteps.keySet() ) {
+	    def myName = name
 		Closure body = pSteps[name]
-        m[ name ] = {
-		    stage("$name") {
+        m[ myName ] = {
+		    stage("$myName") {
                 try {
                      body()
-                     sh "echo ${name} SUCCESS >> ${WORKSPACE}/l2_odsc.txt"
+                     sh "echo ${myName} SUCCESS >> ${WORKSPACE}/l2_odsc.txt"
                 }
                 catch (Exception e) {
-                     sh "echo ${name} SUCCESS >> ${WORKSPACE}/l2_odsc.txt"
+                     sh "echo ${myName} SUCCESS >> ${WORKSPACE}/l2_odsc.txt"
                      throw(e)
                 }
 			}
