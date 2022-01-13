@@ -3,9 +3,9 @@ def call (Map pSteps = [:]) {
 
     touch "${WORKSPACE}/l2_odsc.txt"
 
-    for( name in pSteps ) {
+    for( name in pSteps.keySet() ) {
 		Closure body = pSteps[name]
-        m[ name ] = script {
+        m[ name ] = stage {
             try {
                  //body()
                  sh "echo ${theScript} SUCCESS >> ${WORKSPACE}/l2_odsc.txt"
