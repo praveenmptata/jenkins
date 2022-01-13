@@ -8,7 +8,7 @@ def call (Map pSteps = [:]) {
         m[ name ] = {
 		    stage("$name") {
                 try {
-                     //body()
+                     body()
                      sh "echo ${name} SUCCESS >> ${WORKSPACE}/l2_odsc.txt"
                 }
                 catch (Exception e) {
