@@ -1,26 +1,19 @@
 def call (Map pSteps = [:]) {
     m = [:]
-    defaultCfg = [status: true, statusFile: 'l2_odsc.txt']
-    pSteps = defaultCfg + pSteps
 
-    if(pSteps.status) {
-        touch "${WORKSPACE}/${pSteps.statusFile}"
-    }
+    touch "${WORKSPACE}/l2_odsc.txt"
 
     for( script in pSteps ) {
-        if ( script in defaultCfg ) {
-		    continue
-		}
 		def theScript = script
 		Closure body = pSteps[theScript]
         m[ theScript ] = {
             stage( theScript ) {
                 try {
                      body()
-                     sh "echo ${theScript} SUCCESS >> ${WORKSPACE}/${pSteps.statusFile}"
+                     sh "echo ${theScript} SUCCESS >> ${WORKSPACE}/l2_odsc.txt"
                 }
                 catch (Exception e) {
-                     sh "echo ${theScript} SUCCESS >> ${WORKSPACE}/${pSteps.statusFile}"
+                     sh "echo ${theScript} SUCCESS >> ${WORKSPACE}/l2_odsc.txt"
                      throw(e)
                 }
             }
@@ -28,5 +21,5 @@ def call (Map pSteps = [:]) {
     }
     println "Inputs : ${m.toMapString()}"
     parallel m
-    sh "cat ${WORKSPACE}/${pSteps.statusFile}"
+    sh "cat ${WORKSPACE}/l2_odsc.txt"
 }
