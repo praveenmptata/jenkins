@@ -1,32 +1,32 @@
 def call (Map pSteps = [:]) {
     m = [:]
     defaultCfg = [status: true, statusFile: 'l2_odsc.txt']
-	pSteps = defaultCfg + pSteps
+    pSteps = defaultCfg + pSteps
     sh " rm ${WORKSPACE}/${pSteps.statusFile}; touch ${WORKSPACE}/${pSteps.statusFile}"
 
     for( name in pSteps.keySet() ) {
-	
-		if (name in defaultCfg.keySet()) {
-		    continue
-		}
-		
-	    def myName = name
-		Closure body = pSteps[name]
+
+        if (name in defaultCfg.keySet()) {
+            continue
+        }
+
+        def myName = name
+        Closure body = pSteps[name]
         m[ myName ] = {
 		    script {
                 try {
                     body()
-					if(pSteps.status) {
+                    if(pSteps.status) {
                         sh "echo ${myName} SUCCESS >> ${WORKSPACE}/${pSteps.statusFile}"
-					}
+                    }
                 }
                 catch (Exception e) {
-				    if(pSteps.status) {
+                    if(pSteps.status) {
                         sh "echo ${myName} SUCCESS >> ${WORKSPACE}/${pSteps.statusFile}"
-					}
-                     throw(e)
+                    }
+                    throw(e)
                 }
-			}
+            }
         }
     }
     println "Inputs : ${m.toMapString()}"
