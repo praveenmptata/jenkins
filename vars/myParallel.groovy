@@ -12,10 +12,11 @@ def call (Map pSteps = [:]) {
 		    continue
 		}
 		def theScript = script
+		Closure body = pSteps[theScript]
         m[ theScript ] = {
             stage( theScript ) {
                 try {
-                     pSteps[theScript]()
+                     body()
                      sh "echo ${theScript} SUCCESS >> ${WORKSPACE}/${pSteps.statusFile}"
                 }
                 catch (Exception e) {
