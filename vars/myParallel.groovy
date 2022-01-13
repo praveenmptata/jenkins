@@ -1,7 +1,7 @@
 def call (Map pSteps = [:]) {
     m = [:]
 
-    touch "${WORKSPACE}/l2_odsc.txt"
+    sh " rm ${WORKSPACE}/l2_odsc.txt; touch ${WORKSPACE}/l2_odsc.txt"
 
     for( name in pSteps.keySet() ) {
 		Closure body = pSteps[name]
