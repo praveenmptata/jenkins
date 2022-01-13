@@ -14,10 +14,10 @@ def call (Map pSteps = [:]) {
             stage( theScript ) {
                 try {
                      pSteps[theScript]
-                     pSteps.status ?: sh "echo ${theScript} SUCCESS >> ${WORKSPACE}/${pSteps.statusFile}"
+                     sh "echo ${theScript} SUCCESS >> ${WORKSPACE}/${pSteps.statusFile}"
                 }
                 catch (Exception e) {
-                     pSteps.status ?: sh "echo ${theScript} SUCCESS >> ${WORKSPACE}/${pSteps.statusFile}"
+                     sh "echo ${theScript} SUCCESS >> ${WORKSPACE}/${pSteps.statusFile}"
                      throw(e)
                 }
             }
