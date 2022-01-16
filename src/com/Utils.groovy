@@ -37,9 +37,8 @@ def reloadJobConfig(String script, String jobname, String folderName) {
             InputStream is = new FileInputStream(file)
             job.updateByXml(new StreamSource(is))
             job.save()
+            return true
         }
     }
-
-    return true
 }
 
