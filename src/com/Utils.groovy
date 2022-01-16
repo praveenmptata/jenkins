@@ -1,4 +1,3 @@
-
 package com
 
 import java.io.InputStream;
@@ -9,18 +8,16 @@ import groovy.util.*
 import groovy.xml.*
 
 @NonCPS
-boolean reloadJobConfig(String script, String toBeCopiedJobName, String folderName) {
-    println 'hello'
-    def allJobs = hudson.model.Hudson.instance.getAllItems(Job.class).findAll { it.getFullName().contains(folderName) && it.name == toBeCopiedJobName} 
+boolean reloadJobConfig(String script, String jobname, String folderName) {
+    def Ins = hudson.model.Hudson.instance
+    def allJobs = Ins.getAllItems(Job.class).findAll { it.getFullName().contains(folderName) && it.name == jobname} 
     if (allJobs.isEmpty()) {
-        println 'Error : No Job ${toBeCopiedJobName} found inside ${folderName}'
+        println 'Error : No Job ${jobname} found inside ${folderName}'
 		return false
     }
 
-    println "script : ${script}"
-
 	for (job in allJobs) {
-	    if (job.name == toBeCopiedJobName) {
+	    if (job.name == jobname) {
 		    println 'job found'
             def configXMLFile = job.getConfigFile()
             def file = configXMLFile.getFile()
