@@ -17,13 +17,13 @@ def getPipelineJobs(String jobname) {
 
 @NonCPS
 def reloadJobConfig(String script, String jobname) {
-
+    /*
     def allJobs = getPipelineJobs(jobname)
     if (allJobs.isEmpty()) {
         println "Error : No Job ${jobname} found inside ${folderName}"
         return false
     }
-    allJobs.each {println it.getFullName()}
+    allJobs.each {println it.getFullName()}*/
 
 	def job = hudson.model.Hudson.instance.getItemByFullName(jobname)
 	assert job != null && job instanceof org.jenkinsci.plugins.workflow.job.WorkflowJob : 'Input is not a pipeline job'
