@@ -16,11 +16,12 @@ boolean reloadJobConfig(String script, String toBeCopiedJobName, String folderNa
 		return false
     }
 
-    println 'script : ${script}'
-	println 'jobname : ${toBeCopiedJobName}'
-	println 'folder : ${folderName}'
+    println "script : ${script}"
+	println "jobname : ${toBeCopiedJobName}"
+	println "folder : ${folderName}"
 	for (job in allJobs) {
-	    if (jon.name == toBeCopiedJobName) {
+	    if (job.name == toBeCopiedJobName) {
+		    println 'job found'
             def configXMLFile = job.getConfigFile()
             def file = configXMLFile.getFile()
             
