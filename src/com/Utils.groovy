@@ -27,7 +27,7 @@ def reloadJobConfig(String script, String jobname) {
     for (job in allJobs) {
 	}*/
 	def job = hudson.model.Hudson.instance.getItem(jobname)
-	//assert job instanceof org.jenkinsci.plugins.workflow.job.WorkflowJob : 'Input is not a pipeline job'
+	assert job != null && job instanceof org.jenkinsci.plugins.workflow.job.WorkflowJob : 'Input is not a pipeline job'
 
     if (job.getFullName() == jobname) {
         println "Editing job ${jobname}"
