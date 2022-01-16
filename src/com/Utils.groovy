@@ -19,7 +19,7 @@ def getPipelineJobs(String jobname, String folderName) {
 def reloadJobConfig(String script, String jobname, String folderName) {
     def allJobs = getPipelineJobs(jobname, folderName)
     if (allJobs.isEmpty()) {
-        println 'Error : No Job ${jobname} found inside ${folderName}'
+        println "Error : No Job ${jobname} found inside ${folderName}"
 		return false
     }
 
