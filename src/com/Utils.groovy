@@ -8,9 +8,16 @@ import groovy.util.*
 import groovy.xml.*
 
 @NonCPS
-boolean reloadJobConfig(String script, String jobname, String folderName) {
+def getPipelineJobs(String jobname, String folderName) {
     def Ins = hudson.model.Hudson.instance
-    def allJobs = Ins.getAllItems(Job.class).findAll { it.getFullName().contains(folderName) && it.name == jobname} 
+	def Jobs = Ins.getAllItems(org.jenkinsci.plugins.workflow.job.WorkflowJob)
+	return Jobs.findAll { it.getFullName().contains(folderName) && it.name == jobname}
+}
+
+
+@NonCPS
+def reloadJobConfig(String script, String jobname, String folderName) {
+    def allJobs = getPipelineJobs(jobname, folderName)
     if (allJobs.isEmpty()) {
         println 'Error : No Job ${jobname} found inside ${folderName}'
 		return false
@@ -18,7 +25,7 @@ boolean reloadJobConfig(String script, String jobname, String folderName) {
 
 	for (job in allJobs) {
 	    if (job.name == jobname) {
-		    println 'job found'
+		    println "Editing job ${jobname} inside folder ${folderName}"
             def configXMLFile = job.getConfigFile()
             def file = configXMLFile.getFile()
 
@@ -35,3 +42,4 @@ boolean reloadJobConfig(String script, String jobname, String folderName) {
 	
 	return true
 }
+
