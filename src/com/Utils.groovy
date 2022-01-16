@@ -23,8 +23,8 @@ def reloadJobConfig(String script, String jobname, String folderName) {
         return false
     }
 
-	for (job in allJobs) {
-	    if (job.name == jobname) {
+    for (job in allJobs) {
+        if (job.name == jobname) {
             println "Editing job ${jobname} inside folder ${folderName}"
             def configXMLFile = job.getConfigFile()
             def file = configXMLFile.getFile()
@@ -35,8 +35,8 @@ def reloadJobConfig(String script, String jobname, String folderName) {
             file.withWriter {out-> XmlUtil.serialize(rootNode, out) }
 
             InputStream is = new FileInputStream(file)
-            job.updateByXml(new StreamSource(is));
-            job.save();         
+            job.updateByXml(new StreamSource(is))
+            job.save()
         }
     }
 
