@@ -9,6 +9,7 @@ import groovy.util.*
 import groovy.xml.*
 
 boolean reloadJobConfig(String script, String toBeCopiedJobName, String folderName) {
+    println 'hello'
     def allJobs = hudson.model.Hudson.instance.getAllItems(Job.class).findAll { it.getFullName().contains(folderName) && it.name == toBeCopiedJobName} 
     if (allJobs.isEmpty()) {
         println 'Error : No Job ${toBeCopiedJobName} found inside ${folderName}'
