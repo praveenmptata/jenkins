@@ -8,7 +8,7 @@ import javax.xml.transform.stream.StreamSource
 import groovy.util.*
 import groovy.xml.*
 
-//@NonCPS
+@NonCPS
 boolean reloadJobConfig(String script, String toBeCopiedJobName, String folderName) {
     println 'hello'
     def allJobs = hudson.model.Hudson.instance.getAllItems(Job.class).findAll { it.getFullName().contains(folderName) && it.name == toBeCopiedJobName} 
