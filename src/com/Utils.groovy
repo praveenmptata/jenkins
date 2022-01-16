@@ -22,7 +22,7 @@ def reloadJobConfig(String script, String jobname, String folderName) {
         println "Error : No Job ${jobname} found inside ${folderName}"
 		return false
     }
-
+    println 'check'
 	for (job in allJobs) {
 	    if (job.name == jobname) {
 		    println "Editing job ${jobname} inside folder ${folderName}"
