@@ -7,23 +7,9 @@ import javax.xml.transform.stream.StreamSource
 import groovy.util.*
 import groovy.xml.*
 
-@NonCPS
-def getPipelineJobs(String jobname) {
-    def Ins = hudson.model.Hudson.instance
-    def Jobs = Ins.getAllItems(org.jenkinsci.plugins.workflow.job.WorkflowJob)
-    return Jobs.findAll { it.name == jobname}
-}
-
 
 @NonCPS
 def reloadJobConfig(String script, String jobname) {
-    /*
-    def allJobs = getPipelineJobs(jobname)
-    if (allJobs.isEmpty()) {
-        println "Error : No Job ${jobname} found inside ${folderName}"
-        return false
-    }
-    allJobs.each {println it.getFullName()}*/
 
 	def job = hudson.model.Hudson.instance.getItemByFullName(jobname)
 	assert job != null && job instanceof org.jenkinsci.plugins.workflow.job.WorkflowJob : 'Input is not a pipeline job'
