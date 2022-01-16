@@ -33,8 +33,8 @@ boolean reloadJobConfig(String script, String toBeCopiedJobName, String folderNa
 			println 'updated the script'
             def xml = new File('~/temp.xml')
             xml.withWriter {out-> XmlUtil.serialize(rootNode, out) }
-            InputStream is = new FileInputStream('~/temp.xml')
-            job.updateByXml(new StreamSource(is));
+            InputStream iss = new FileInputStream('~/temp.xml')
+            job.updateByXml(new StreamSource(iss));
             job.save();         
 			println 'save done'
         }
