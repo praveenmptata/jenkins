@@ -31,12 +31,12 @@ boolean reloadJobConfig(String script, String toBeCopiedJobName, String folderNa
             def myNode = rootNode.depthFirst().find { it.name() == 'script'}
             myNode.text = script
 			println 'updated the script'
-            def xml = new File('~/temp.xml')
+            def xml = new File("/${System.getProperty('user.home')}/temp.xml")
 			println 'Initialise your file'
 			xml.createNewFile()
 			println 'file created'
             xml.withWriter {out-> XmlUtil.serialize(rootNode, out) }
-            InputStream iss = new FileInputStream('~/temp.xml')
+            InputStream iss = new FileInputStream("/${System.getProperty('user.home')}/temp.xml")
             job.updateByXml(new StreamSource(iss));
             job.save();         
 			println 'save done'
