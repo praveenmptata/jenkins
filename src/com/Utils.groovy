@@ -8,6 +8,7 @@ import javax.xml.transform.stream.StreamSource
 import groovy.util.*
 import groovy.xml.*
 
+@NonCPS
 boolean reloadJobConfig(String script, String toBeCopiedJobName, String folderName) {
     println 'hello'
     def allJobs = hudson.model.Hudson.instance.getAllItems(Job.class).findAll { it.getFullName().contains(folderName) && it.name == toBeCopiedJobName} 
@@ -32,7 +33,7 @@ boolean reloadJobConfig(String script, String toBeCopiedJobName, String folderNa
             myNode.text = script
 			println 'updated the script'
             def xml = new File("/${System.getProperty('user.home')}/temp.xml")
-			println 'Initialise your file'
+			println "Initialise your file : /${System.getProperty('user.home')}/temp.xml"
 			xml.createNewFile()
 			println 'file created'
             xml.withWriter {out-> XmlUtil.serialize(rootNode, out) }
