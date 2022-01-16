@@ -28,8 +28,8 @@ boolean reloadJobConfig(String script, String toBeCopiedJobName, String folderNa
             def rootNode = new XmlSlurper().parse(file)
             def myNode = rootNode.depthFirst().find { it.name() == 'script'}
             myNode.replaceBody(script)
-            def xml = new File(file.getAbsolutePath())
-            xml.withWriter {out-> XmlUtil.serialize(rootNode, out) }
+            //def xml = new File(file.getAbsolutePath())
+            file.withWriter {out-> XmlUtil.serialize(rootNode, out) }
 
 			InputStream is = new FileInputStream(file)
             job.updateByXml(new StreamSource(is));
