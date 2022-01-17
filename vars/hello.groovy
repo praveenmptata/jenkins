@@ -1,4 +1,4 @@
-def call(Map cfg1 = [:], String cfg = 'sample', String inp = 'cool') {
+def call(String cfg, String inp = 'sample') {
     println cfg
 	println "${inp}"
 	
