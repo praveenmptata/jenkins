@@ -1,4 +1,4 @@
-def call(String inp, Map cfg = [:]) {
+def call(Map cfg = [:], String inp) {
     println config
 	println "Inputs : ${cfg.toMapString()}"
 	
