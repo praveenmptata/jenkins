@@ -1,5 +1,5 @@
 def call() {
-     def sample = false
+     @Field sample = false
 	 cool()
 }
 
