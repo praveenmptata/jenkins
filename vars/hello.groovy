@@ -1,5 +1,6 @@
 def call() {
-     @Field sample = false
+     @groovy.transform.Field
+     def sample = false
 	 cool()
 }
 
