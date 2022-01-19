@@ -3,8 +3,11 @@ def sample = false
 
 def call() {
 	 cool()
+	 println "hello : ${sample}"
 }
 
 def cool() {
-    println "${sample}"
+    println "cool :${sample}"
+	sample = true
+	println "cool : ${sample}"
 }
