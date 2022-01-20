@@ -1,6 +1,6 @@
 def call(Map Inputs = [:] ) {
 
-    Map default_inputs = [thirdparty:true, clean_workSpace:true, optimize:false]
+    Map default_inputs = [clean_workSpace:true, optimize:false]
     Inputs = default_inputs + Inputs
     println "Inputs : ${Inputs.toMapString()}"
 
@@ -14,10 +14,6 @@ def call(Map Inputs = [:] ) {
 
     if (Inputs.clean_workSpace) {
         sh ''' cd ${WORKSPACE}; rm -rf * ; rm -rf .repo'''
-    }
-	
-    if (Inputs.thirdparty) {
-        checkout([$class: 'GitSCM', branches: [[name: '*/Arm_roadmap_jenkins_scripts']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: '5g_jobs_thirdparty']], gitTool: 'Default', submoduleCfg: [], userRemoteConfigs: [[credentialsId: '841769bd-6936-4c5e-aa77-5214885738e0', url: 'https://jenkins@blrgithub.radisys.com/scm/alm/lte/5g_jobs_thirdparty.git']]])
     }
 	
     if (Inputs.optimize) {
