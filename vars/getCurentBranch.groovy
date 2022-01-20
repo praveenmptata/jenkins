@@ -9,7 +9,7 @@ def call(String component) {
         sh 'exit 1'
     }
 
-    def branch = sh(script: "repo info ${repoMap[component.toLowerCase()]} \| grep 'Current branch' \| cut -d ':' -f 2",
+    def branch = sh(script: "repo info ${repoMap[component.toLowerCase()]} | grep Current",
                                                                         returnStdout: true).trim()
     println "${component} : ${branch}"
     return branch
