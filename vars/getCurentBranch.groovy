@@ -1,4 +1,5 @@
 def call(String component) {
+    sh 'pwd'
     Map repoMap = [cu : "products_cu",
                     du : "5gran_jio_odsc",
                     platform : "platform_services"]
