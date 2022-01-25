@@ -1,13 +1,7 @@
-@groovy.transform.Field
-def sample = false
-
 def call() {
-	 cool()
-	 println "hello : ${sample}"
-}
-
-def cool() {
-    println "cool :${sample}"
-	sample = true
-	println "cool : ${sample}"
+    retry(2) {
+	     if(true) {
+	         println "hello : ${sample}"
+		 }
+	 }
 }
