@@ -6,7 +6,7 @@ import java.io.File;
 import javax.xml.transform.stream.StreamSource
 import groovy.util.*
 import groovy.xml.*
-
+import hudson.model.Executor
 
 @NonCPS
 def reloadJobConfig(String script, String jobname) {
@@ -32,3 +32,8 @@ def reloadJobConfig(String script, String jobname) {
     return false
 }
 
+@NonCPS
+def getInstanceNumber() {
+    Executor e = Executor.currentExecutor();
+    return e.getNumber()
+}
