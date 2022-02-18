@@ -1,7 +1,7 @@
 def call() {
-    retry(2) {
-	     if(true) {
-	         println "hello"
-		 }
-	 }
+    lock('ODSC_CU_UT_RES') {
+	    def y = 1
+		sleep 5
+	}
+	println y
 }
