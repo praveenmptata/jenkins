@@ -1,8 +1,8 @@
 def call() {
     homeDir = sh(script: 'printenv HOME', returnStdout: true).trim()
-	int i = getFirstAwailableWs()
+	def i = getFirstAwailableWs().toInteger()
 	try {
-	    sh 'echo ${i + 1}'
+	    sh "echo ${i + 1}"
 	    sh 'exit 1'
 	} catch (error) {
 	    sh "rm ${homeDir}/lockWs${i}"
