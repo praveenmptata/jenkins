@@ -1,6 +1,6 @@
 @groovy.transform.Field
-def hello = ""
+def hello1 = sh(script: 'echo hello', returnStdout: true).trim()
 
 def call() {
-	println hello
+	println hello1
 }
