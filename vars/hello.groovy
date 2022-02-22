@@ -1,9 +1,13 @@
 def call() {
-    hello1 = sh(script: 'echo hello', returnStdout: true).trim()
-	print()
-	println hello1
+    homeDir = sh(script: 'printenv HOME', returnStdout: true).trim()
+	getFirstAwailableWs()
 }
 
-def print() {
-    println hello1
+def getFirstAwailableWs() {
+    ['lockWs0', 'lockWs1', 'lockWs2'].eachWithIndex {it, index ->
+        if(! fileExists("${homeDir}/${it}")) {
+            sh "touch ${homeDir}/${it}"
+            return index
+        }
+    }
 }
