@@ -4,10 +4,10 @@ def call() {
 }
 
 def getFirstAwailableWs() {
-    ['lockWs0', 'lockWs1', 'lockWs2'].eachWithIndex {it, index ->
-        if(! fileExists("${homeDir}/${it}")) {
-            sh "touch ${homeDir}/${it}"
-            return index
+    for( lock in ['lockWs0', 'lockWs1', 'lockWs2']) {
+        if(! fileExists("${homeDir}/${lock}")) {
+            sh "touch ${homeDir}/${lock}"
+            return lock[-1]
         }
     }
 }
