@@ -1,6 +1,6 @@
 def call() {
     homeDir = sh(script: 'printenv HOME', returnStdout: true).trim()
-	def i = getFirstAwailableWs()
+	int i = getFirstAwailableWs()
 	try {
 	    sh 'echo ${i + 1}'
 	    sh 'exit 1'
