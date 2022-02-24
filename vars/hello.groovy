@@ -1,21 +1,8 @@
-def call() {
-    homeDir = sh(script: 'printenv HOME', returnStdout: true).trim()
-	def i = getFirstAwailableWs().toInteger()
-	try {
-	    sh "echo ${i + 1}"
-	    sh 'exit 1'
-	} catch (error) {
-	    sh "rm ${homeDir}/lockWs${i}"
-		throw error
-	}
-	getFirstAwailableWs()
-}
+def call(String manifestFile) {
+    Map repo = [ (constants.manifest_9x)   : '9x',
+                 (constants.manifest_10x)  : '10x',
+                 (constants.manifest_ccdu) : '9x']
+  
+    return repo[manifestFile]
 
-def getFirstAwailableWs() {
-    for( lock in ['lockWs0', 'lockWs1', 'lockWs2']) {
-        if(! fileExists("${homeDir}/${lock}")) {
-            sh "touch ${homeDir}/${lock}"
-            return lock[-1]
-        }
-    }
 }
